@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<robot name="boat">
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.124229" rpy="0 0 0"/>
+      <mass value="227"/>
+      <inertia ixx="181.42" ixy="0" ixz="0" iyy="408.203" iyz="0" izz="495.037"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boat_control_pkg/meshes/body.dae" scale="1 1 1"/>
+      </geometry>
+      </visual>
+    <visual name="left_battery_visual">
+       <origin xyz="0 -0.03 0" rpy="0 0 0"/> <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/battery.dae" scale="1 1 1"/>
+       </geometry>
+    </visual>
+    <visual name="right_battery_visual">
+       <origin xyz="0 -2.03 0" rpy="0 0 0"/> <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/battery.dae" scale="1 1 1"/>
+       </geometry>
+    </visual>
+     <visual name='right_engine_link_visual'>
+       <origin xyz="-2.37378 -1.02713 0.318237" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/engine.dae" scale="1 1 1"/>
+       </geometry>
+     </visual>
+     <visual name='left_engine_link_visual'>
+       <origin xyz="-2.37378 1.02713 0.318237" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/engine.dae" scale="1 1 1"/>
+       </geometry>
+     </visual>
+
+    <collision>
+       <origin xyz="0 0 1.25" rpy="0 0 0"/>
+       <geometry>
+         <box size="1.85 1 0.1"/>
+       </geometry>
+    </collision>
+     <collision name='left_float_collision'>
+       <origin xyz="-0.4 1.03 0.2" rpy="3.14159 1.57079 3.14159"/>
+       <geometry>
+         <cylinder length="4" radius="0.2"/>
+       </geometry>
+     </collision>
+      <collision name='right_float_collision'>
+       <origin xyz="-0.4 -1.03 0.2" rpy="3.14159 1.57079 3.14159"/>
+       <geometry>
+         <cylinder length="4" radius="0.2"/>
+       </geometry>
+     </collision>
+     </link>
+
+  <link name="camera_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/> <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.15 0.05"/>
+      </geometry>
+      <material name="red">
+         <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.1 0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="1.1 0 1.3" rpy="0 0.3 0"/>
+  </joint>
+
+  <link name='imu_link'>
+     <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="0.015"/>
+       <inertia ixx="1e-05" ixy="0" ixz="0" iyy="1e-05" iyz="0" izz="1e-05"/>
+     </inertial>
+     </link>
+
+   <joint name='imu_joint' type='fixed'>
+     <parent link="base_link"/>
+     <child link="imu_link"/>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+   </joint>
+
+  <link name="gps_link">
+     <inertial>
+        <mass value="0.01"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+     </inertial>
+  </link>
+
+  <joint name='gps_joint' type='fixed'>
+    <parent link="base_link"/>
+    <child link="gps_link"/>
+    <origin xyz="0 0 0.12" rpy="0 0 0"/>
+  </joint>
+
+  <link name='left_propeller_link'>
+     <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="0.5"/>
+       <inertia ixx="0.008545" ixy="0" ixz="0" iyy="0.008545" iyz="0" izz="0.0144"/>
+     </inertial>
+     <visual>
+       <origin xyz="0 0 0" rpy="0 -1.57079 0"/>
+       <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/propeller.dae" scale="1 1 1"/>
+       </geometry>
+     </visual>
+     <collision>
+        <origin xyz="-0.08 0 0" rpy="3.14159 0.0 3.14159"/>
+       <geometry>
+         <cylinder length="0.18" radius="0.24"/>
+       </geometry>
+     </collision>
+   </link>
+
+   <link name='right_propeller_link'>
+     <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="0.5"/>
+       <inertia ixx="0.008545" ixy="0" ixz="0" iyy="0.008545" iyz="0" izz="0.0144"/>
+     </inertial>
+     <visual>
+       <origin xyz="0 0 0" rpy="0 -1.57079 0"/>
+       <geometry>
+         <mesh filename="package://boat_control_pkg/meshes/propeller.dae" scale="1 1 1"/>
+       </geometry>
+     </visual>
+      <collision>
+         <origin xyz="-0.08 0 0" rpy="3.14159 0.0 3.14159"/>
+       <geometry>
+         <cylinder length="0.18" radius="0.24"/>
+       </geometry>
+     </collision>
+   </link>
+
+   <joint name='left_engine_propeller_joint' type='fixed'>
+     <parent link="base_link"/>
+     <child link="left_propeller_link"/>
+     <origin xyz="-2.65193 1.02713 -0.191134" rpy="0 1.57079 0"/>
+     </joint>
+
+   <joint name='right_engine_propeller_joint' type='fixed'>
+     <parent link="base_link"/>
+     <child link="right_propeller_link"/>
+     <origin xyz="-2.65193 -1.02713 -0.191134" rpy="0 1.57079 0"/>
+      </joint>
+
+</robot>
+
